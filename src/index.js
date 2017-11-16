@@ -6,6 +6,7 @@ const express     = require('express');
 const app         = express();
 // Import the route endpoints
 const users      = require('./routes/users');
+const courses      = require('./routes/courses');
 // Import body parser and logger
 const jsonParser  = require('body-parser').json;
 const logger      = require('morgan');
@@ -17,6 +18,7 @@ app.use(jsonParser());
 
 // Set up the router and the entry point: /questions
 app.use('/api/users', users);
+app.use('/api/courses', courses);
 
 // Catching up 404 erros
 app.use(function (req, res, next) {

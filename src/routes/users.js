@@ -10,6 +10,7 @@ router.get('/', function(req, res) {
   });
 });
 
+// POST Request to /api/users
 router.post('/', function(req, res) {
   res.json({
     response: 'You sent me a POST request to "users" endpoint.',
