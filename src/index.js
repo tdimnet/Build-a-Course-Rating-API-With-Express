@@ -6,6 +6,12 @@ var morgan = require('morgan');
 
 var app = express();
 
+// defining routes
+const users = require('./routes/users');
+
+// Body parser and logger
+const logger      = require('morgan');
+
 // set our port
 app.set('port', process.env.PORT || 5000);
 
@@ -13,7 +19,8 @@ app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
 
 // setup our static route to serve files from the "public" folder
-app.use('/', express.static('public'));
+// app.use('/', express.static('public'));
+app.use('/api/users', users);
 
 // catch 404 and forward to global error handler
 app.use(function(req, res, next) {
