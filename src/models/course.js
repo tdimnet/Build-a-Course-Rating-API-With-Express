@@ -5,8 +5,8 @@ const User = require('../models/user');
 
 const CourseSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
+    type      : mongoose.Schema.ObjectId,
+    ref       : 'User'
   },
   title: {
     type      : String,
