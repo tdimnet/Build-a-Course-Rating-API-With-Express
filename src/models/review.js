@@ -14,7 +14,7 @@ const ReviewSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    required: [true, 'A course needs to have a rating'],
     min     : 1,
     max     : 5
   },
