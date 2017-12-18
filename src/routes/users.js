@@ -2,14 +2,24 @@
 
 const express = require('express');
 const router = express.Router();
-
 const User = require('../models/user');
 
-// GET Request to /api/users
-router.get('/', function(req, res) {
-  res.json({
-    response: 'You sent me a GET request to "users" endpoint.'
-  });
+// GET /api/users
+  // status: 200
+  // goal: Returns the currently authenticated user
+router.get('/', function(req, res, next) {
+  User
+    .find({})
+    .exec(function(error, users) {
+      if(error) {
+        return next(error);
+      } else {
+        res.json({
+          response: users
+        });
+      }
+    });
+
 });
 
 // POST Request to /api/users

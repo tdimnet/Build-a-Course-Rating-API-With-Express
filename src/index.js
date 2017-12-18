@@ -31,7 +31,7 @@ const app         = express();
 app.use(logger('dev'));
 app.use(jsonParser());
 
-// Set up the router and the entry point: /questions
+// Set up the router and both entry points
 app.use('/api/users', users);
 app.use('/api/courses', courses);
 
