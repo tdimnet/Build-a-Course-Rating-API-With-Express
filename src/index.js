@@ -11,7 +11,18 @@ const jsonParser  = require('body-parser').json;
 const logger      = require('morgan');
 
 // set up the mongodb connection
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/course-rating-api');
+const db = mongoose.connection
 
+// handling mongo error
+db.on('error', function(err) {
+  console.error('connection error', err);
+});
+
+db.once('open', function() {
+  console.log('db connection successful');
+});
 
 // Set up the express app
 const app         = express();
