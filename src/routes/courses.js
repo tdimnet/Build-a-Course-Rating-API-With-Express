@@ -33,10 +33,22 @@ router.post('/', function(req, res) {
 });
 
 // GET Request to /api/courses/:courseId
-router.get('/:courseId', function(req, res) {
-  res.json({
-    response: 'You sent me a GET request for a specific course ID: ' + req.params.courseId
-  });
+router.get('/:courseId', function(req, res, next) {
+  Course
+    .findById(req.params.courseId)
+    .exec(function(error, course) {
+      if(error) {
+        res.status = 400;
+        res.json({
+          response: 'File not found'
+        });
+      } else {
+        res.status = 200;
+        res.json({
+          response: course
+        });
+      }
+    })
 });
 
 // PUT Request to /api/courses/:courseId
