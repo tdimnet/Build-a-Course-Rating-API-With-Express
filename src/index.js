@@ -2,15 +2,19 @@
 
 // Import statements
 const express     = require('express');
-// Set up the express app
-const app         = express();
+
 // Import the route endpoints
-const users      = require('./routes/users');
-const courses      = require('./routes/courses');
+const users       = require('./routes/users');
+const courses     = require('./routes/courses');
 // Import body parser and logger
 const jsonParser  = require('body-parser').json;
 const logger      = require('morgan');
 
+// set up the mongodb connection
+
+
+// Set up the express app
+const app         = express();
 
 // Set up logger and body parser (for json encode)
 app.use(logger('dev'));
