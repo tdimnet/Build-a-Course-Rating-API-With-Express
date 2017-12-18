@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+const Course = require('../models/course');
+const Review = require('../models/review');
+
 // GET Request to /api/courses
 router.get('/', function(req, res) {
   res.json({

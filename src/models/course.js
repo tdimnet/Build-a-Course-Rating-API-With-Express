@@ -1,7 +1,12 @@
+'use strict';
+
 const mongoose = require('mongoose');
 
 const CourseSchema = new mongoose.Schema({
-  // add user relationship
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User'
+  // },
   title: {
     type      : String,
     required  : true,

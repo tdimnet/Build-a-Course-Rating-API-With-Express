@@ -1,4 +1,6 @@
-const mongoose = required('mongoose');
+'use strict';
+
+const mongoose = require('mongoose');
 
 const ReviewSchema = new mongoose.Schema({
   // add user relationship
