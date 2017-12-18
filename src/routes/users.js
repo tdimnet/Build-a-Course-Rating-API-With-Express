@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 // GET /api/users
   // status: 200
-  // goal: Returns the currently authenticated user
+  // goal: returns the currently authenticated user
 router.get('/', function(req, res, next) {
   User
     .find({})
@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
       if(error) {
         return next(error);
       } else {
+        res.status = 200;
         res.json({
           response: users
         });
