@@ -10,8 +10,13 @@ const courses     = require('./routes/courses');
 const jsonParser  = require('body-parser').json;
 const logger      = require('morgan');
 
-// set up the mongodb connection
 const mongoose = require('mongoose');
+
+// Set up the express app
+const app = express();
+
+// set up the mongodb connection
+
 mongoose.connect('mongodb://localhost:27017/course-rating-api');
 const db = mongoose.connection
 
@@ -20,12 +25,30 @@ db.on('error', function(err) {
   console.error('connection error', err);
 });
 
-db.once('open', function() {
-  console.log('db connection successful');
+db.on('connected', function() {
+    console.log('MongoDB: successfully connected');
 });
 
-// Set up the express app
-const app         = express();
+db.on('disconnected', function() {
+    console.log('MongoDB: disconnected');
+});
+
+
+//
+  // The seed block is below
+//
+
+// const seeder = require('mongoose-seeder');
+// const data = require('./data/data.json');
+//
+// db.once('open', function() {
+//   seeder
+//     .seed(data)
+//     .catch(function(err) {
+//       console.log(err);
+//     })
+// });
+
 
 // Set up logger and body parser (for json encode)
 app.use(logger('dev'));
