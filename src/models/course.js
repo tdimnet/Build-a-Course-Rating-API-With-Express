@@ -1,12 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const CourseSchema = new mongoose.Schema({
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User'
-  // },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
   title: {
     type      : String,
     required  : true,

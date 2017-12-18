@@ -1,9 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const ReviewSchema = new mongoose.Schema({
-  // add user relationship
+  user: {
+    type    : mongoose.Schema.ObjectId,
+    ref     : 'User'
+  },
   postedOn: {
     type    : Date,
     default : Date.now
