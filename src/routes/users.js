@@ -29,11 +29,29 @@ router.get('/:userId', function(req, res, next) {
 // POST /api/users
   // status: 201
   // goal: Creates a user, sets the Location header to "/", and returns no content
-router.post('/', function(req, res) {
-  res.json({
-    response: 'You sent me a POST request to "users" endpoint.',
-    body: req.body
-  });
+router.post('/', function(req, res, next) {
+
+  if(req.body.fullName && req.body.emailAddress && req.body.password) {
+    const newUser = {
+      fullName: req.body.fullName,
+      emailAddress: req.body.emailAddress,
+      password: req.body.password
+    }
+
+    User.create(newUser, function(error, user) {
+      if(error) {
+        return next(error);
+      } else {
+        return res.redirect('/');
+      }
+    });
+
+  } else {
+    res.status = 400;
+    res.json({
+      response: 'All fields are required'
+    })
+  }
 });
 
 // Exporting the router

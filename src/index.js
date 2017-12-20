@@ -4,7 +4,7 @@
 const express     = require('express');
 
 // Import the route endpoints
-const users       = require('./routes/users');
+const user       = require('./routes/users');
 const courses     = require('./routes/courses');
 // Import body parser and logger
 const jsonParser  = require('body-parser').json;
@@ -55,7 +55,7 @@ app.use(logger('dev'));
 app.use(jsonParser());
 
 // Set up the router and both entry points
-app.use('/api/users', users);
+app.use('/api/user', user);
 app.use('/api/courses', courses);
 
 // Catching up 404 erros
