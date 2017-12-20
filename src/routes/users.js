@@ -42,7 +42,7 @@ router.post('/', function(req, res, next) {
       if(error) {
         return next(error);
       } else {
-        return res.redirect('/');
+        return res.json('it works');
       }
     });
 
