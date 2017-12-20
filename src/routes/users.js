@@ -44,7 +44,10 @@ router.post('/', function(req, res, next) {
       if(error) {
         return next(error);
       } else {
-        return res.json('it works');
+        return res
+                .status(201)
+                .location('/')
+                .send();
       }
     });
 
