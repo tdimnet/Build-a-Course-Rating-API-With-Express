@@ -1,7 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const User = require('../models/user');
+const User = require('./user');
+const Review = require('./review');
 
 const CourseSchema = new mongoose.Schema({
   user: {
@@ -34,6 +35,10 @@ const CourseSchema = new mongoose.Schema({
       type      : String,
       required  : [true, 'The description of the step is required.']
     }
+  }],
+  reviews: [{
+    type        : mongoose.Schema.ObjectId,
+    ref         : 'Review'
   }]
 });
 

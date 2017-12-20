@@ -24,7 +24,34 @@ router.get('/', function(req, res, next) {
           });
       }
     });
+});
 
+// GET /api/courses/:courseId
+  // status: 200
+  // goal: returns all Course properties and related documents for the provided course ID
+  // goal 2:  use Mongoose population to load the related user and reviews documents.
+router.get('/:courseId', function(req, res, next) {
+  Course
+    .findById(req.params.courseId)
+    .populate({
+      path: 'user',
+      model: 'User'
+    })
+    .exec(function(error, course) {
+      if(error) {
+        res
+          .status(404)
+          .json({
+            response: 'File not found'
+          });
+      } else {
+        res
+          .status(200)
+          .json({
+            response: course
+          });
+      }
+    })
 });
 
 // POST Request to /api/courses
@@ -32,25 +59,6 @@ router.post('/', function(req, res) {
   res.json({
     response: 'You sent me a POST request to "courses" endpoint.'
   });
-});
-
-// GET Request to /api/courses/:courseId
-router.get('/:courseId', function(req, res, next) {
-  Course
-    .findById(req.params.courseId)
-    .exec(function(error, course) {
-      if(error) {
-        res.status = 400;
-        res.json({
-          response: 'File not found'
-        });
-      } else {
-        res.status = 200;
-        res.json({
-          response: course
-        });
-      }
-    })
 });
 
 // PUT Request to /api/courses/:courseId
