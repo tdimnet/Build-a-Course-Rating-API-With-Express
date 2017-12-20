@@ -37,6 +37,14 @@ router.get('/:courseId', function(req, res, next) {
       path: 'user',
       model: 'User'
     })
+    .populate({
+      path: 'reviews',
+      model: 'Review',
+      populate: {
+        path: 'user',
+        model: 'User'
+      }
+    })
     .exec(function(error, course) {
       if(error) {
         res

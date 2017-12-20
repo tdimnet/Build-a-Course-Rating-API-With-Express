@@ -18,7 +18,9 @@ const ReviewSchema = new mongoose.Schema({
     min     : 1,
     max     : 5
   },
-    review  : String
+  review: {
+    type: String
+  }
 });
 
 const Review = mongoose.model('Review', ReviewSchema);
