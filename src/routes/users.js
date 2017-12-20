@@ -12,15 +12,17 @@ router.get('/:userId', function(req, res, next) {
     .findById(req.params.userId)
     .exec(function(error, user) {
       if(error) {
-        res.status = 400;
-        res.json({
-          response: 'There is no user for this id'
-        });
+        res
+          .status(404)
+          .json({
+            response: 'There is no user for this id'
+          });
       } else {
-        res.status = 200;
-        res.json({
-          response: user
-        });
+        res
+          .status(200)
+          .json({
+            response: user
+          });
       }
     });
 
@@ -47,10 +49,11 @@ router.post('/', function(req, res, next) {
     });
 
   } else {
-    res.status = 400;
-    res.json({
-      response: 'All fields are required'
-    })
+    res
+      .status(403)
+      .json({
+        error: 'All fields are required'
+      });
   }
 });
 
