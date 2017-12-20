@@ -11,15 +11,17 @@ const Review = require('../models/review');
   // goal: returns the course _id and title properties
 router.get('/', function(req, res, next) {
   Course
-    .find({})
+    .find()
+    .select('_id, title')
     .exec(function(error, courses) {
       if(error) {
         return next(error);
       } else {
-        res.status = 200;
-        res.json({
-          response: courses
-        });
+        res
+          .status(200)
+          .json({
+            response: courses
+          });
       }
     });
 
