@@ -100,14 +100,39 @@ router.post('/', function(req, res, next) {
   }
 });
 
-// PUT Request to /api/courses/:courseId
-router.put('/:courseId', function(req, res) {
-  res.json({
-    response: 'You sent me a PUT request for a specific course ID: ' + req.params.courseId
-  });
+// PUT /api/courses/:courseId
+  // status: 204
+  // goals:
+    // Updates a course
+    // Returns no content
+router.put('/:courseId', function(req, res, next) {
+  if(req.body.title && req.body.description) {
+    const updateCourse = {
+      title         : req.body.title,
+      description   : req.body.description
+    };
+
+    res
+      .status(204)
+      .json({
+        response: updateCourse
+      })
+  } else {
+    res
+      .status(403)
+      .json({
+        error: 'All fields are required'
+      })
+  }
+
 });
 
-// POST Request to /api/courses/:courseId/reviews
+// POST /api/courses/:courseId/reviews
+  // status: 201
+  // goals:
+    // Creates a review for the specified course ID
+    // Sets the Location header to the related course
+    // Returns no content
 router.post('/:courseId/reviews', function(req, res) {
   res.json({
     response: 'You sent me a POST request for a specific course ID: ' + req.params.courseId + ' in order to add a review to it.'
