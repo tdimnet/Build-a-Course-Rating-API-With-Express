@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 
-// GET /api/users
+// GET /api/user
   // status: 200
   // goal: returns the currently authenticated user
 router.get('/:userId', function(req, res, next) {
@@ -28,7 +28,7 @@ router.get('/:userId', function(req, res, next) {
 
 });
 
-// POST /api/users
+// POST /api/user
   // status: 201
   // goal: Creates a user, sets the Location header to "/", and returns no content
 router.post('/', function(req, res, next) {

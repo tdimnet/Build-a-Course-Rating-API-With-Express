@@ -62,11 +62,42 @@ router.get('/:courseId', function(req, res, next) {
     })
 });
 
-// POST Request to /api/courses
-router.post('/', function(req, res) {
-  res.json({
-    response: 'You sent me a POST request to "courses" endpoint.'
-  });
+// POST /api/courses
+  // status: 201
+  // goals:
+    // Creates a course,
+    // sets the Location header
+    // returns no content
+router.post('/', function(req, res, next) {
+  if(req.body.title && req.body.description) {
+    const newCourse = {
+      title             : req.body.title,
+      description       : req.body.description,
+      estimatedTime     : req.body.estimatedTime || null,
+      materialsNeeded   : req.body.materialsNeeded || null,
+      steps             : null,
+      reviews           : null
+    };
+
+    Course.create(newCourse, function(error, course) {
+      if(error) {
+        return next(error);
+      } else {
+        return res
+                .status(201)
+                .json({
+                  reponse: newCourse
+                })
+      }
+    });
+
+  } else {
+    res
+      .status(403)
+      .json({
+        error: 'All fields are required'
+      });
+  }
 });
 
 // PUT Request to /api/courses/:courseId
