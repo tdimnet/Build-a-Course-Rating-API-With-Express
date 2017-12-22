@@ -141,11 +141,17 @@ router.post('/:courseId/reviews', function(req, res, next) {
       review: req.body.review || null
     };
 
-    res
-      .status(201)
-      .json({
-        response: newReview
-      })
+    Review.create(newReview, function(error, review) {
+      if (error) {
+        return next(error);
+      } else {
+        res
+          .status(201)
+          .json({
+            response: newReview
+          })
+      }
+    });
 
   } else {
     res
@@ -154,9 +160,6 @@ router.post('/:courseId/reviews', function(req, res, next) {
         error: 'All fields are required'
       })
   }
-  res.json({
-    response: 'You sent me a POST request for a specific course ID: ' + req.params.courseId + ' in order to add a review to it.'
-  });
 });
 
 
