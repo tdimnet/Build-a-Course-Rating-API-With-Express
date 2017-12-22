@@ -113,7 +113,7 @@ router.put('/:courseId', function(req, res, next) {
     };
 
     res
-      .status(204)
+      .status(201)
       .json({
         response: updateCourse
       })
@@ -133,7 +133,27 @@ router.put('/:courseId', function(req, res, next) {
     // Creates a review for the specified course ID
     // Sets the Location header to the related course
     // Returns no content
-router.post('/:courseId/reviews', function(req, res) {
+router.post('/:courseId/reviews', function(req, res, next) {
+  if (req.body.rating) {
+    const newReview = {
+      user: req.body.user || null,
+      rating: req.body.rating,
+      review: req.body.review || null
+    };
+
+    res
+      .status(201)
+      .json({
+        response: newReview
+      })
+
+  } else {
+    res
+      .status(403)
+      .json({
+        error: 'All fields are required'
+      })
+  }
   res.json({
     response: 'You sent me a POST request for a specific course ID: ' + req.params.courseId + ' in order to add a review to it.'
   });
