@@ -11,13 +11,11 @@ const CourseSchema = new mongoose.Schema({
   },
   title: {
     type      : String,
-    required  : [true, 'A course must have a title.'],
-    trim      : true
+    required  : [true, 'A course must have a title.']
   },
   description: {
     type      : String,
-    required  : [true, 'A course must have a description.'],
-    trim      : true
+    required  : [true, 'A course must have a description.']
   },
   estimatedTime: {
     type      : String
@@ -41,6 +39,35 @@ const CourseSchema = new mongoose.Schema({
     ref         : 'Review'
   }]
 });
+
+// Set the step number property to the correct format
+CourseSchema
+    .pre('save', function(next) {
+        this.steps = this.steps.map(function (step, index) {
+            step.stepNumber = index + 1;
+            return step;
+        });
+        return next();
+    });
+
+// Verify if a course has at least one step
+CourseSchema
+    .path('steps')
+    .validate(function (steps) {
+        return steps.length >= 1;
+    }, 'Each course must have at least one step.');
+
+// Get an overal rating for the course
+CourseSchema
+          .virtual('overallRating')
+          .get(function() {
+            let numReviews = this.reviews.length;
+            let totalScore = 0;
+            this.reviews.forEach(function(review) {
+              totalScore += review.rating;
+            });
+            return Math.round(totalScore / numReviews);
+          });
 
 const Course = mongoose.model('Course', CourseSchema);
 module.exports = Course;
