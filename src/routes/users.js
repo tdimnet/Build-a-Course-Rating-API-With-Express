@@ -25,7 +25,6 @@ router.get('/:userId', function(req, res, next) {
           });
       }
     });
-
 });
 
 // POST /api/user
