@@ -6,6 +6,8 @@ const router = express.Router();
 const Course = require('../models/course');
 const Review = require('../models/review');
 
+const mid = require('../middleware');
+
 // GET /api/courses
   // status: 200
   // goal: returns the course _id and title properties
@@ -68,7 +70,7 @@ router.get('/:courseId', function(req, res, next) {
     // Creates a course,
     // sets the Location header
     // returns no content
-router.post('/', function(req, res, next) {
+router.post('/', mid.requireAuth, function(req, res, next) {
   if(req.body.title && req.body.description) {
     const newCourse = {
       title             : req.body.title,
