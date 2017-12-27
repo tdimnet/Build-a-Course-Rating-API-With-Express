@@ -70,36 +70,24 @@ router.get('/:courseId', function(req, res, next) {
     // Creates a course,
     // sets the Location header
     // returns no content
-router.post('/', mid.requireAuth, function(req, res, next) {
-  if(req.body.title && req.body.description) {
-    const newCourse = {
-      title             : req.body.title,
-      description       : req.body.description,
-      estimatedTime     : req.body.estimatedTime || null,
-      materialsNeeded   : req.body.materialsNeeded || null,
-      steps             : null,
-      reviews           : null
-    };
+router.post('/', function(req, res, next) {
 
-    Course.create(newCourse, function(error, course) {
-      if(error) {
-        return next(error);
-      } else {
-        return res
-                .status(201)
-                .json({
-                  reponse: newCourse
-                })
-      }
-    });
+  const course = new Course(req.body);
 
-  } else {
-    res
-      .status(403)
-      .json({
-        error: 'All fields are required'
-      });
-  }
+  course.save(function(error) {
+    if (error && error.name === 'ValidationError') {
+      res.json({
+        response: error
+      })
+    } else if (error) {
+      return next(error);
+    } else {
+      res
+        .status(201)
+        .location('/')
+        .send();
+    }
+  });
 });
 
 // PUT /api/courses/:courseId

@@ -34,6 +34,7 @@ router.get('/:userId', function(req, res, next) {
   // goal: Creates a user, sets the Location header to "/", and returns no content
 router.post('/', function(req, res, next) {
 
+  // TODO: update router for POST with hashed password
   if(req.body.fullName && req.body.emailAddress && req.body.password) {
     const newUser = {
       fullName: req.body.fullName,
