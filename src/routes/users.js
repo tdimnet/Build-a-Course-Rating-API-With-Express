@@ -1,8 +1,9 @@
 'use strict';
 
-const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
+const express   = require('express');
+const router    = express.Router();
+const User      = require('../models/user');
+const mid       = require('../middleware');
 
 // GET /api/user
   // status: 200
@@ -15,7 +16,8 @@ router.get('/:userId', function(req, res, next) {
         res
           .status(404)
           .json({
-            response: 'There is no user for this id'
+            message: 'There is no user for this id',
+            error: error
           });
       } else {
         res

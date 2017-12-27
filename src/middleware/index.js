@@ -9,7 +9,6 @@ const requireAuth = function(req, res, next) {
   const unauthorized = new Error('Unauthorized User');
   unauthorized.status = (401);
 
-
   let credentials = auth(req);
   if (credentials && credentials.name && credentials.pass) {
 
