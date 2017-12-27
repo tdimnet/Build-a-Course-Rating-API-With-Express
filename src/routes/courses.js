@@ -52,7 +52,8 @@ router.get('/:courseId', function(req, res, next) {
         res
           .status(404)
           .json({
-            response: 'File not found'
+            response: 'File not found',
+            error: error
           });
       } else {
         res
@@ -71,12 +72,12 @@ router.get('/:courseId', function(req, res, next) {
     // sets the Location header
     // returns no content
 router.post('/', function(req, res, next) {
-
   const course = new Course(req.body);
-
   course.save(function(error) {
     if (error && error.name === 'ValidationError') {
-      res.json({
+      res
+        .status(400)
+        .json({
         response: error
       })
     } else if (error) {
@@ -102,19 +103,27 @@ router.put('/:courseId', function(req, res, next) {
       description   : req.body.description
     };
 
-    res
-      .status(201)
-      .json({
-        response: updateCourse
-      })
-  } else {
-    res
-      .status(403)
-      .json({
-        error: 'All fields are required'
-      })
+    let course = new Course(req.body);
+    Course.update(
+      { _id: course._id },
+      course,
+      function(error) {
+        if (error && error.name === 'ValidationError') {
+          res
+            .status(400)
+            .json({
+            response: error
+          })
+        } else if (error) {
+          return next(error);
+        } else {
+          res
+            .status(204)
+            .send();
+        }
+      }
+    )
   }
-
 });
 
 // POST /api/courses/:courseId/reviews
