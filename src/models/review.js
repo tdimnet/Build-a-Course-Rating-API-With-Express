@@ -1,7 +1,7 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const User = require('../models/user');
+const mongoose  = require('mongoose');
+const User      = require('../models/user');
 
 const ReviewSchema = new mongoose.Schema({
   user: {
@@ -22,6 +22,14 @@ const ReviewSchema = new mongoose.Schema({
     type: String
   }
 });
+
+ReviewSchema.pre(
+  'save',
+  function(next) {
+    Math.round(this.rating);
+    return next();
+  }
+);
 
 const Review = mongoose.model('Review', ReviewSchema);
 module.exports = Review;

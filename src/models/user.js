@@ -47,13 +47,5 @@ UserSchema
     'Invalid email adress'
   );
 
-// userSchema
-//     .path('emailAddress')
-//     .validate(function (email) {
-//         return validator.isEmail(email);
-//     }, 'Email address must be valid');
-
-
-
 const User = mongoose.model('User', UserSchema);
 module.exports = User;

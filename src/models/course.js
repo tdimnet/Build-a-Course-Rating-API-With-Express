@@ -1,8 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const User = require('./user');
-const Review = require('./review');
+const mongoose    = require('mongoose');
+const User        = require('./user');
+const Review      = require('./review');
 
 const CourseSchema = new mongoose.Schema({
   user: {
@@ -53,9 +53,12 @@ CourseSchema
 // Verify if a course has at least one step
 CourseSchema
     .path('steps')
-    .validate(function (steps) {
+    .validate(
+      function (steps) {
         return steps.length >= 1;
-    }, 'Each course must have at least one step.');
+    },
+    'Each course must have at least one step.'
+  );
 
 // Get an overal rating for the course
 CourseSchema
