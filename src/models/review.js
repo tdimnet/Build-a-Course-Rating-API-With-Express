@@ -23,13 +23,5 @@ const ReviewSchema = new mongoose.Schema({
   }
 });
 
-ReviewSchema.pre(
-  'save',
-  function(next) {
-    Math.round(this.rating);
-    return next();
-  }
-);
-
 const Review = mongoose.model('Review', ReviewSchema);
 module.exports = Review;
