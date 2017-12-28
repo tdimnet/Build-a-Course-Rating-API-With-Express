@@ -1,12 +1,12 @@
 'use strict';
 
-const express = require('express');
-const router = express.Router();
+const express   = require('express');
+const router    = express.Router();
 
-const Course = require('../models/course');
-const Review = require('../models/review');
+const Course    = require('../models/course');
+const Review    = require('../models/review');
 
-const mid = require('../middleware');
+const mid       = require('../middleware');
 
 // GET /api/courses
   // status: 200
@@ -97,34 +97,29 @@ router.post('/', function(req, res, next) {
     // Updates a course
     // Returns no content
 router.put('/:courseId', function(req, res, next) {
-  if(req.body.title && req.body.description) {
-    const updateCourse = {
-      title         : req.body.title,
-      description   : req.body.description
-    };
-
-    let course = new Course(req.body);
+  if (req.body.user && req.body.user._id && req.body.user._id == req.userId) {
+    const course = new Course(req.body);
     Course.update(
       { _id: course._id },
       course,
-      function(error) {
+      function (error) {
         if (error && error.name === 'ValidationError') {
-          res
-            .status(400)
-            .json({
-            response: error
-          })
+          res.status(400);
+          res.json(validationErrors(400, error.errors));
         } else if (error) {
-          return next(error);
+          return next(err);
         } else {
-          res
-            .status(204)
-            .send();
+          res.status(204).send();
         }
       }
-    )
+    );
+  } else {
+    let err = new Error('Courses can only be edited by their authors');
+    err.status = 401;
+    return next(err);
   }
 });
+
 
 // POST /api/courses/:courseId/reviews
   // status: 201
