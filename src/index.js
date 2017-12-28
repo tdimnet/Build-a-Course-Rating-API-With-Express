@@ -1,16 +1,16 @@
 'use strict';
 
 // Import statements
-const express     = require('express');
+const express       = require('express');
 
 // Import the route endpoints
-const user       = require('./routes/users');
-const courses     = require('./routes/courses');
+const user          = require('./routes/users');
+const courses       = require('./routes/courses');
 // Import body parser and logger
-const jsonParser  = require('body-parser').json;
-const logger      = require('morgan');
+const jsonParser    = require('body-parser').json;
+const logger        = require('morgan');
 
-const mongoose = require('mongoose');
+const mongoose      = require('mongoose');
 
 // Set up the express app
 const app = express();
@@ -55,7 +55,7 @@ app.use(logger('dev'));
 app.use(jsonParser());
 
 // Set up the router and both entry points
-app.use('/api/user', user);
+app.use('/api/users', user);
 app.use('/api/courses', courses);
 
 // Catching up 404 erros

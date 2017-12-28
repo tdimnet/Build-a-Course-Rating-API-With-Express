@@ -8,24 +8,13 @@ const mid       = require('../middleware');
 // GET /api/user
   // status: 200
   // goal: returns the currently authenticated user
-router.get('/:userId', function(req, res, next) {
+router.get('/:userId', mid.requireAuth, function(req, res, next) {
   User
-    .findById(req.params.userId)
-    .exec(function(error, user) {
-      if(error) {
-        res
-          .status(404)
-          .json({
-            message: 'There is no user for this id',
-            error: error
-          });
-      } else {
-        res
-          .status(200)
-          .json({
-            response: user
-          });
-      }
+    .findOne({ _id: req.userId })
+    .select('-hashedPassword')
+    .exec(function (err, user) {
+      if (err) return next(err);
+      res.status(200).json({ data: [user] });
     });
 });
 

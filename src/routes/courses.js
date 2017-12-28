@@ -71,7 +71,7 @@ router.get('/:courseId', function(req, res, next) {
     // Creates a course,
     // sets the Location header
     // returns no content
-router.post('/', function(req, res, next) {
+router.post('/', mid.requireAuth, function(req, res, next) {
   const course = new Course(req.body);
   course.save(function(error) {
     if (error && error.name === 'ValidationError') {
@@ -96,7 +96,7 @@ router.post('/', function(req, res, next) {
   // goals:
     // Updates a course
     // Returns no content
-router.put('/:courseId', function(req, res, next) {
+router.put('/:courseId', mid.requireAuth, function(req, res, next) {
   if (req.body.user && req.body.user._id && req.body.user._id == req.userId) {
     const course = new Course(req.body);
     Course.update(
@@ -127,7 +127,7 @@ router.put('/:courseId', function(req, res, next) {
     // Creates a review for the specified course ID
     // Sets the Location header to the related course
     // Returns no content
-router.post('/:courseId/reviews', function(req, res, next) {
+router.post('/:courseId/reviews', mid.requireAuth, function(req, res, next) {
   if (req.body.rating) {
     const newReview = {
       user: req.body.user || null,
