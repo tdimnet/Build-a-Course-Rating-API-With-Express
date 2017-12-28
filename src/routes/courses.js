@@ -96,7 +96,7 @@ router.post('/', mid.requireAuth, function(req, res, next) {
   // goals:
     // Updates a course
     // Returns no content
-router.put('/:courseId', mid.requireAuth, function(req, res, next) {
+router.put('/:courseId', function(req, res, next) {
   if (req.body.user && req.body.user._id && req.body.user._id == req.userId) {
     const course = new Course(req.body);
     Course.update(
